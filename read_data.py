@@ -29,6 +29,18 @@ def npz_to_data(path):
     :return:data
     """
     data = np.load(path)
+    return data
 
-csv_to_npz("data_csv/mnist_train.csv", "mnist_train")
-csv_to_npz("data_csv/mnist_test.csv", "mnist_test")
+def read_raw_mnist(data):
+    """
+    Function specifically to split xxxx1 x 785 default matrix
+    - removes .csv headers in row 1
+    -splits first column off to have xxxxx x 1 labels
+    - rest is xxxxx x 784 data points
+    :param data: xxxx1 x 785 data
+    :return: data, labels
+    """
+    remove_headers = data[1:, :]
+    data_points = remove_headers[:, 1:]
+    labels = remove_headers[:, 0:1]
+    return data_points, labels
