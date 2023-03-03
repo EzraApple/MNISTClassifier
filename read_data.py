@@ -31,6 +31,7 @@ def npz_to_data(path):
     data = np.load(path)
     return data
 
+
 def read_raw_mnist(data):
     """
     Function specifically to split xxxx1 x 785 default matrix
@@ -43,4 +44,4 @@ def read_raw_mnist(data):
     remove_headers = data[1:, :]
     data_points = remove_headers[:, 1:]
     labels = remove_headers[:, 0:1]
-    return data_points, labels
+    return data_points, np.squeeze(labels)
