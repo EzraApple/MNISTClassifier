@@ -10,14 +10,6 @@ class LDAClassifier:
      a 'pooled within-class covariance matrix' aka
      get each classes cov matrix and average them
     """
-    def __init__(self):
-        self.labels = None
-        self.data = None
-        self.cov = None
-        self.means = None
-        self.priors = None
-        self.classes = None
-        self.num_classes = None
 
     def fit(self, data, labels):
         """
@@ -121,30 +113,6 @@ class LDAClassifier:
         plt.title(f"Covariance Matrix Visualization")
         plt.colorbar()
         plt.show()
-
-    def various_training(self, data, labels):
-        nums = [100, 200, 500, 1000, 2000, 5000, 10000, 15000, 20000, 30000, 40000, 50000]
-        error = []
-
-        val_data = data[-10000:]
-        val_labels = labels[-10000:]
-
-        for num in nums:
-            training_data = data[:num, :]
-            training_labels = labels[:num]
-
-            self.fit(training_data, training_labels)
-
-            error.append(self.error(val_data, val_labels))
-
-        fig, axes = plt.subplots(1, 1, figsize=(7, 7))
-        axes.plot(nums, error, '.b-')
-        axes.set_title("LDA: Error vs. Number of Training Samples")
-        axes.set_xlabel("Number of Training Samples")
-        axes.set_ylabel("Error")
-        plt.show()
-
-        print(f"Final Error: {error[-1]}")
 
 
 class QDAClassifier:
@@ -250,28 +218,3 @@ class QDAClassifier:
         plt.title(f"Covariance Matrix Visualization: Label {label}")
         plt.colorbar()
         plt.show()
-
-    def various_training(self, data, labels):
-        nums = [100, 200, 500, 1000, 2000, 5000, 10000, 15000, 20000, 30000, 40000, 50000]
-        error = []
-
-        val_data = data[-10000:]
-        val_labels = labels[-10000:]
-
-        for num in nums:
-            training_data = data[:num, :]
-            training_labels = labels[:num]
-
-            self.fit(training_data, training_labels)
-
-            error.append(self.error(val_data, val_labels))
-
-        fig, axes = plt.subplots(1, 1, figsize=(7, 7))
-        axes.plot(nums, error, '.b-')
-        axes.set_title("QDA: Error vs. Number of Training Samples")
-        axes.set_xlabel("Number of Training Samples")
-        axes.set_ylabel("Error")
-        plt.show()
-
-        print(f"Final Error: {error[-1]}")
-
