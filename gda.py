@@ -61,7 +61,6 @@ class LDAClassifier:
         :return: predicted data point - n x 1
         """
         probabilities = self.ldf(data)
-
         predictions = np.argmax(probabilities, axis=1)
         return predictions
 
@@ -100,12 +99,8 @@ class LDAClassifier:
         count(predicted == actual)/count(samples)
         :return: error
         """
-
         predicted = self.predict(data)
-        print(f"Accuracy: {(predicted == labels).mean()}")
         error = 1 - (predicted == labels).mean()
-        print(f"Error: {error}")
-
         return error
 
     def visualize_cov(self):
@@ -124,10 +119,6 @@ class QDAClassifier:
         :param labels: training set labels
         :return: None
         """
-
-        self.data = data
-        self.labels = labels
-
         n, d = data.shape
         self.classes = np.unique(labels)
         self.num_classes = self.classes.shape[0]
@@ -185,10 +176,10 @@ class QDAClassifier:
             centered_data = data - mean
             u, sig, v = np.linalg.svd(cov)
             cov = cov + (sig.min() * 100) * np.eye(*cov.shape)
-            w = np.linalg.solve(cov, centered_data.T)
-            a = -0.5 * np.linalg.det(cov) + prior
 
-            qdf = -0.5 * (centered_data * w.T).sum(-1) + a
+            w = np.linalg.solve(cov, centered_data.T)
+            alpha = -0.5 * np.linalg.det(cov) + prior
+            qdf = -0.5 * (centered_data * w.T).sum(-1) + alpha
             results[:, label] = qdf
 
         return results
@@ -200,12 +191,8 @@ class QDAClassifier:
         count(predicted == actual)/count(samples)
         :return: error
         """
-
         predicted = self.predict(data)
-        print(f"Accuracy: {(predicted == labels).mean()}")
         error = 1 - (predicted == labels).mean()
-        print(f"Error: {error}")
-
         return error
 
     def visualize_cov(self, label):
