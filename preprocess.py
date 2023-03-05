@@ -11,17 +11,17 @@ def l2_normalize_samples(data):
     return data
 
 
-def normalize_features(data):
+def standardize_features(data):
     """
-    subtracts mean from each feature in data (columns are features),
-    then divides by standard deviation. Each feature will now have mean 0,
-    and standard deviation 1
+    returns a copy of data with standardized
+    features (columns)
     :param data: sample data
     :return: normalized sample data
     """
-    n, d = data.shape
-    feature_means = data.mean(axis=0)
-    feature_std = data.std(axis=0)
-    data = data - feature_means
-    data = data / feature_std
-    return data
+    copy = np.copy(data)
+    feature_means = copy.mean(axis=0)
+    feature_std = copy.std(axis=0)
+    copy -= feature_means
+    copy /= feature_std
+    copy[np.isnan(copy)] = 0
+    return copy

@@ -205,3 +205,4 @@ class QDAClassifier:
         plt.title(f"Covariance Matrix Visualization: Label {label}")
         plt.colorbar()
         plt.show()
+
